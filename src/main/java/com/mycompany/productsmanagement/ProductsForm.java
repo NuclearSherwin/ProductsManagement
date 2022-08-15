@@ -4,6 +4,7 @@
  */
 package com.mycompany.productsmanagement;
 
+import com.mycompany.productsmanagement.helper.Validator;
 import com.mycompany.productsmanagement.model.Product;
 import com.mycompany.productsmanagement.model.ProductList;
 import java.util.Set;
@@ -518,6 +519,22 @@ public class ProductsForm extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
         try {
+            StringBuilder sb = new StringBuilder();
+            
+            Validator.checkEmpty(txtProductID, sb, "ID does not empty!");
+            Validator.checkName(txtProductName, sb, "Name was not contain any number");
+            Validator.checkQuantity(txtProductQuantity, sb);
+            Validator.checkDescription(txtProductDescription, sb);
+            Validator.checkProductionDate(txtProductionDate, sb);
+            Validator.checkShop(txtProductID, sb);
+            
+            
+            if (sb.length() > 0 ) {
+                JOptionPane.showMessageDialog(this, sb.toString(), "Invalid Data", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            
             Product product = new Product();
             product.setProductId(txtProductID.getText());
             product.setName(txtProductName.getText());
@@ -617,6 +634,8 @@ public class ProductsForm extends javax.swing.JFrame {
         LblStatus.setText(productList.getCurrentProductStatus());
         Product product = productList.getCurrentProduct();
         fillProductToForm(product);
+        tblProducts.setRowSelectionInterval(productList.getCurrentProductIndex(), productList.getCurrentProductIndex());
+        
     }//GEN-LAST:event_btnPreviousActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -625,6 +644,7 @@ public class ProductsForm extends javax.swing.JFrame {
         LblStatus.setText(productList.getCurrentProductStatus());
         Product product = productList.getCurrentProduct();
         fillProductToForm(product);
+        tblProducts.setRowSelectionInterval(productList.getCurrentProductIndex(), productList.getCurrentProductIndex());
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
@@ -633,6 +653,7 @@ public class ProductsForm extends javax.swing.JFrame {
         LblStatus.setText(productList.getCurrentProductStatus());
         Product product = productList.getCurrentProduct();
         fillProductToForm(product);
+        tblProducts.setRowSelectionInterval(productList.getCurrentProductIndex(), productList.getCurrentProductIndex());
     }//GEN-LAST:event_btnFirstActionPerformed
 
     private void btnFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalActionPerformed
@@ -641,6 +662,7 @@ public class ProductsForm extends javax.swing.JFrame {
        LblStatus.setText(productList.getCurrentProductStatus());
        Product product = productList.getCurrentProduct();
        fillProductToForm(product);
+       tblProducts.setRowSelectionInterval(productList.getCurrentProductIndex(), productList.getCurrentProductIndex());
     }//GEN-LAST:event_btnFinalActionPerformed
 
     private void tblProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductsMouseClicked
