@@ -15,6 +15,9 @@ public class ProductsForm extends javax.swing.JFrame {
      */
     public ProductsForm() {
         initComponents();
+        
+        // align form to center of the screen
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -458,6 +461,15 @@ public class ProductsForm extends javax.swing.JFrame {
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         // TODO add your handling code here:
+        // when user click new btn, it will reset all field to empty string
+        txtProductID.setText("");
+        txtProductName.setText("");
+        txtProductDescription.setText("");
+        txtProductionDate.setText("");
+        btnProductQuanity.setText(""); 
+        btnProductCategory.setText("");
+        btnProductShop.setText("");
+        
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -478,6 +490,7 @@ public class ProductsForm extends javax.swing.JFrame {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
