@@ -4,12 +4,20 @@
  */
 package com.mycompany.productsmanagement;
 
+import com.mycompany.productsmanagement.model.Product;
+import com.mycompany.productsmanagement.model.ProductList;
+import java.util.Set;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author phong
  */
 public class ProductsForm extends javax.swing.JFrame {
-
+    private DefaultTableModel tblModel = null;
+    private ProductList productList = new ProductList();
+    
     /**
      * Creates new form ProductsForm
      */
@@ -18,7 +26,30 @@ public class ProductsForm extends javax.swing.JFrame {
         
         // align form to center of the screen
         setLocationRelativeTo(null);
+        initTable();
+        initProductData();
     }
+    
+    
+    // initialize the title for table
+    public void initTable() {
+        tblModel = new DefaultTableModel();
+        tblModel.setColumnIdentifiers(new Object[] {"ID", "Name", "Description", 
+            "Production date", "Quantity", "Category", "Shop"});
+        
+        tblProducts.setModel(tblModel);
+    }
+    
+    // init the data to table
+    private void initProductData() {
+        productList.add(new Product("TV", "Mouse", "DPI 800", "2022", "Paika", "Technical", 222));
+        productList.add(new Product("BN", "Keyboard", "example", "2022", "Paika", "Technical", 222));
+        productList.add(new Product("AM", "Screen", "example", "2022", "Paika", "Technical", 222));
+        productList.add(new Product("MV", "Adapter", "example", "2022", "Paika", "Technical", 222));
+        
+        productList.renderToTable(tblModel);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,10 +67,10 @@ public class ProductsForm extends javax.swing.JFrame {
         txtProductName = new javax.swing.JTextField();
         txtProductID = new javax.swing.JTextField();
         txtProductDescription = new javax.swing.JTextField();
-        btnProductQuanity = new javax.swing.JTextField();
+        txtProductQuanity = new javax.swing.JTextField();
         txtProductionDate = new javax.swing.JTextField();
-        btnProductCategory = new javax.swing.JTextField();
-        btnProductShop = new javax.swing.JTextField();
+        txtProductCategory = new javax.swing.JTextField();
+        txtProductShop = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -96,10 +127,10 @@ public class ProductsForm extends javax.swing.JFrame {
             }
         });
 
-        btnProductQuanity.setBackground(new java.awt.Color(255, 255, 255));
-        btnProductQuanity.addActionListener(new java.awt.event.ActionListener() {
+        txtProductQuanity.setBackground(new java.awt.Color(255, 255, 255));
+        txtProductQuanity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProductQuanityActionPerformed(evt);
+                txtProductQuanityActionPerformed(evt);
             }
         });
 
@@ -110,14 +141,14 @@ public class ProductsForm extends javax.swing.JFrame {
             }
         });
 
-        btnProductCategory.setBackground(new java.awt.Color(255, 255, 255));
-        btnProductCategory.addActionListener(new java.awt.event.ActionListener() {
+        txtProductCategory.setBackground(new java.awt.Color(255, 255, 255));
+        txtProductCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProductCategoryActionPerformed(evt);
+                txtProductCategoryActionPerformed(evt);
             }
         });
 
-        btnProductShop.setBackground(new java.awt.Color(255, 255, 255));
+        txtProductShop.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setText("ID");
 
@@ -154,9 +185,9 @@ public class ProductsForm extends javax.swing.JFrame {
                     .addComponent(txtProductName)
                     .addComponent(txtProductDescription)
                     .addComponent(txtProductionDate)
-                    .addComponent(btnProductQuanity)
-                    .addComponent(btnProductCategory)
-                    .addComponent(btnProductShop))
+                    .addComponent(txtProductQuanity)
+                    .addComponent(txtProductCategory)
+                    .addComponent(txtProductShop))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -180,15 +211,15 @@ public class ProductsForm extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnProductQuanity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProductQuanity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnProductCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProductCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnProductShop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProductShop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -447,17 +478,17 @@ public class ProductsForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtProductDescriptionActionPerformed
 
-    private void btnProductQuanityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductQuanityActionPerformed
+    private void txtProductQuanityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductQuanityActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnProductQuanityActionPerformed
+    }//GEN-LAST:event_txtProductQuanityActionPerformed
 
     private void txtProductionDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductionDateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtProductionDateActionPerformed
 
-    private void btnProductCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductCategoryActionPerformed
+    private void txtProductCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductCategoryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnProductCategoryActionPerformed
+    }//GEN-LAST:event_txtProductCategoryActionPerformed
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         // TODO add your handling code here:
@@ -466,22 +497,67 @@ public class ProductsForm extends javax.swing.JFrame {
         txtProductName.setText("");
         txtProductDescription.setText("");
         txtProductionDate.setText("");
-        btnProductQuanity.setText(""); 
-        btnProductCategory.setText("");
-        btnProductShop.setText("");
+        txtProductQuanity.setText(""); 
+        txtProductCategory.setText("");
+        txtProductShop.setText("");
+        
+        
         
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+        try {
+            Product product = new Product();
+            product.setProductId(txtProductID.getText());
+            product.setName(txtProductName.getText());
+            product.setDescription(txtProductDescription.getText());
+            product.setProductionDate(txtProductionDate.getText());
+            product.setQuantity(Integer.parseInt(txtProductQuanity.getText()));
+            product.setShop(txtProductShop.getText());
+            
+            productList.add(product);
+            // clear text in input feild
+            btnNewActionPerformed(evt);
+            productList.renderToTable(tblModel);
+            JOptionPane.showMessageDialog(this, "Product save successfully!");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
+        try {
+            Product product = productList.searchById(txtProductID.getText());
+            
+                  
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+        
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
+        try {
+            boolean checkDeleteId = productList.delete(txtProductID.getText());
+            if (!checkDeleteId) {
+               JOptionPane.showMessageDialog(this, "Product ID is not exits or delete failed");
+            }
+            
+            productList.renderToTable(tblModel);
+            JOptionPane.showMessageDialog(this, "Delete product successfully!");
+            
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
@@ -554,9 +630,6 @@ public class ProductsForm extends javax.swing.JFrame {
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnOpen;
     private javax.swing.JButton btnPrevious;
-    private javax.swing.JTextField btnProductCategory;
-    private javax.swing.JTextField btnProductQuanity;
-    private javax.swing.JTextField btnProductShop;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
@@ -575,9 +648,12 @@ public class ProductsForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tblProducts;
+    private javax.swing.JTextField txtProductCategory;
     private javax.swing.JTextField txtProductDescription;
     private javax.swing.JTextField txtProductID;
     private javax.swing.JTextField txtProductName;
+    private javax.swing.JTextField txtProductQuanity;
+    private javax.swing.JTextField txtProductShop;
     private javax.swing.JTextField txtProductionDate;
     // End of variables declaration//GEN-END:variables
 }
