@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 public class ProductsForm extends javax.swing.JFrame {
     private DefaultTableModel tblModel = null;
     private ProductList productList = new ProductList();
+    private boolean isUpdateMode = false;
     
     /**
      * Creates new form ProductsForm
@@ -516,6 +517,21 @@ public class ProductsForm extends javax.swing.JFrame {
             product.setQuantity(Integer.parseInt(txtProductQuantity.getText()));
             product.setShop(txtProductShop.getText());
             
+            
+            // checking weather update or new product
+            if (!isUpdateMode) {
+                if (productList.searchById(product.getProductId()) != null) {
+                    JOptionPane.showMessageDialog(this, "Product is existed!, please try another product");
+                    return;
+                };
+            }
+            else {
+                if (productList.searchById(product.getProductId()) == null) {
+                    JOptionPane.showMessageDialog(this, "ID does not exit");
+                    return;
+                }
+            }
+            
             productList.add(product);
             // clear text in input feild
             btnNewActionPerformed(evt);
@@ -535,14 +551,15 @@ public class ProductsForm extends javax.swing.JFrame {
             if (product == null) {
                 JOptionPane.showMessageDialog(this, "Product ID is not exits or delete failed");
             }
-            
-            txtProductName.setText(product.getName());
-            txtProductDescription.setText(product.getDescription());
-            txtProductionDate.setText(product.getProductionDate());
-            txtProductCategory.setText(product.getCategory());
-            txtProductShop.setText(product.getShop());
-            txtProductQuantity.setText("" + product.getQuantity());
-            
+            else {
+                isUpdateMode = true;
+                txtProductName.setText(product.getName());
+                txtProductDescription.setText(product.getDescription());
+                txtProductionDate.setText(product.getProductionDate());
+                txtProductCategory.setText(product.getCategory());
+                txtProductShop.setText(product.getShop());
+                txtProductQuantity.setText("" + product.getQuantity());
+            }
                   
         }
         catch (Exception e) {
@@ -556,12 +573,13 @@ public class ProductsForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             boolean checkDeleteId = productList.delete(txtProductID.getText());
-            if (!checkDeleteId) {
-               JOptionPane.showMessageDialog(this, "Product ID is not exits or delete failed");
+            if (checkDeleteId) {
+                productList.renderToTable(tblModel);
+                JOptionPane.showMessageDialog(this, "Delete product successfully!");
             }
+            else
+                JOptionPane.showMessageDialog(this, "Product ID is not exits or delete failed");
             
-            productList.renderToTable(tblModel);
-            JOptionPane.showMessageDialog(this, "Delete product successfully!");
             
         }
         catch (Exception e) {
