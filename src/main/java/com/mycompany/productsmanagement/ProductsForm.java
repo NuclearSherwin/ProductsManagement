@@ -493,7 +493,9 @@ public class ProductsForm extends javax.swing.JFrame {
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         // TODO add your handling code here:
-        // when user click new btn, it will reset all field to empty string
+        // when user click new btn, it will reset all field to empty string and reset the Update mode to false
+        isUpdateMode = false;
+        
         txtProductID.setText("");
         txtProductName.setText("");
         txtProductDescription.setText("");
