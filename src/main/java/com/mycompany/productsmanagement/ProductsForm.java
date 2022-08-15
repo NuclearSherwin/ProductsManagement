@@ -29,6 +29,7 @@ public class ProductsForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         initTable();
         initProductData();
+        btnFirstActionPerformed(null);
     }
     
     
@@ -336,6 +337,11 @@ public class ProductsForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProducts);
 
         btnPrevious.setBackground(new java.awt.Color(153, 153, 0));
@@ -494,8 +500,6 @@ public class ProductsForm extends javax.swing.JFrame {
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         // TODO add your handling code here:
         // when user click new btn, it will reset all field to empty string and reset the Update mode to false
-        isUpdateMode = false;
-        
         txtProductID.setText("");
         txtProductName.setText("");
         txtProductDescription.setText("");
@@ -504,7 +508,10 @@ public class ProductsForm extends javax.swing.JFrame {
         txtProductCategory.setText("");
         txtProductShop.setText("");
         
+        isUpdateMode = false;
         
+        // also refresh table
+        productList.renderToTable(tblModel);
         
     }//GEN-LAST:event_btnNewActionPerformed
 
@@ -519,13 +526,12 @@ public class ProductsForm extends javax.swing.JFrame {
             product.setQuantity(Integer.parseInt(txtProductQuantity.getText()));
             product.setShop(txtProductShop.getText());
             
-            
             // checking weather update or new product
             if (!isUpdateMode) {
                 if (productList.searchById(product.getProductId()) != null) {
                     JOptionPane.showMessageDialog(this, "Product is existed!, please try another product");
                     return;
-                };
+                }
             }
             else {
                 if (productList.searchById(product.getProductId()) == null) {
@@ -533,8 +539,9 @@ public class ProductsForm extends javax.swing.JFrame {
                     return;
                 }
             }
+            productList.updateProduct(product);
             
-            productList.add(product);
+            
             // clear text in input feild
             btnNewActionPerformed(evt);
             productList.renderToTable(tblModel);
@@ -550,17 +557,11 @@ public class ProductsForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             Product product = productList.searchById(txtProductID.getText());
-            if (product == null) {
-                JOptionPane.showMessageDialog(this, "Product ID is not exits or delete failed");
+            if (product != null) {
+                fillProductToForm(product);
             }
             else {
-                isUpdateMode = true;
-                txtProductName.setText(product.getName());
-                txtProductDescription.setText(product.getDescription());
-                txtProductionDate.setText(product.getProductionDate());
-                txtProductCategory.setText(product.getCategory());
-                txtProductShop.setText(product.getShop());
-                txtProductQuantity.setText("" + product.getQuantity());
+                JOptionPane.showMessageDialog(this, "Product ID is not exits or delete failed");
             }
                   
         }
@@ -570,6 +571,17 @@ public class ProductsForm extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void fillProductToForm(Product product) {
+        isUpdateMode = true;
+        txtProductName.setText(product.getName());
+        txtProductDescription.setText(product.getDescription());
+        txtProductionDate.setText(product.getProductionDate());
+        txtProductCategory.setText(product.getCategory());
+        txtProductShop.setText(product.getShop());
+        txtProductQuantity.setText("" + product.getQuantity());
+        txtProductID.setText(product.getProductId());
+    }
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
@@ -601,19 +613,40 @@ public class ProductsForm extends javax.swing.JFrame {
 
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
         // TODO add your handling code here:
+        productList.moveToPrevious();
+        LblStatus.setText(productList.getCurrentProductStatus());
+        Product product = productList.getCurrentProduct();
+        fillProductToForm(product);
     }//GEN-LAST:event_btnPreviousActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
+        productList.moveToNext();
+        LblStatus.setText(productList.getCurrentProductStatus());
+        Product product = productList.getCurrentProduct();
+        fillProductToForm(product);
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
         // TODO add your handling code here:
+        productList.moveToFirst();
+        LblStatus.setText(productList.getCurrentProductStatus());
+        Product product = productList.getCurrentProduct();
+        fillProductToForm(product);
     }//GEN-LAST:event_btnFirstActionPerformed
 
     private void btnFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalActionPerformed
         // TODO add your handling code here:
+       productList.moveToLast();
+       LblStatus.setText(productList.getCurrentProductStatus());
+       Product product = productList.getCurrentProduct();
+       fillProductToForm(product);
     }//GEN-LAST:event_btnFinalActionPerformed
+
+    private void tblProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductsMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_tblProductsMouseClicked
 
     /**
      * @param args the command line arguments

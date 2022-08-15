@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 public class ProductList {
     // where product being save
     private ArrayList<Product> list = new ArrayList<>();
-    private int currentIndex = -1;
+    private int currentIndex = 0;
     
     public void moveToFirst() {
         if (currentIndex > 0) {
@@ -23,7 +23,7 @@ public class ProductList {
     }
     
     public void moveToLast() {
-        currentIndex = list.size() -1;
+        currentIndex = list.size() -1;    
     }
     
     public void moveToPrevious() {
@@ -43,10 +43,14 @@ public class ProductList {
     }
     
     public Product getCurrentProduct() {
-        if (list.size() == 0) {
-            return null;
-        }
+        if (list.size() == 0)
+            return null; 
         return list.get(currentIndex);
+    }
+    
+    // change stutus of list when moving page
+    public String getCurrentProductStatus() {
+        return "Record " + (currentIndex + 1) + " of " + list.size();
     }
     
     
