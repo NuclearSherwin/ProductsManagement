@@ -53,6 +53,11 @@ public class ProductList {
         return "Record " + (currentIndex + 1) + " of " + list.size();
     }
     
+    // change positon of product when naviagtion element
+    public void setCurrentProductToRow(Product product) {
+        currentIndex = list.indexOf(product);
+    }
+    
     
     // add product
     public void add(Product product) {

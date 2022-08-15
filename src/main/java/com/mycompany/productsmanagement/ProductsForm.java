@@ -645,7 +645,20 @@ public class ProductsForm extends javax.swing.JFrame {
 
     private void tblProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductsMouseClicked
         // TODO add your handling code here:
+        int rowSelected = tblProducts.getSelectedRow();
         
+        if (rowSelected > 0) {
+            String productID = (String) tblProducts.getValueAt(rowSelected, 0);
+            
+            Product product = productList.searchById(productID);
+            
+            if (product != null) {
+                fillProductToForm(product);
+                
+                productList.setCurrentProductToRow(product);
+                LblStatus.setText(productList.getCurrentProductStatus());
+            }
+        }
     }//GEN-LAST:event_tblProductsMouseClicked
 
     /**
