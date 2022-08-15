@@ -67,7 +67,7 @@ public class ProductsForm extends javax.swing.JFrame {
         txtProductName = new javax.swing.JTextField();
         txtProductID = new javax.swing.JTextField();
         txtProductDescription = new javax.swing.JTextField();
-        txtProductQuanity = new javax.swing.JTextField();
+        txtProductQuantity = new javax.swing.JTextField();
         txtProductionDate = new javax.swing.JTextField();
         txtProductCategory = new javax.swing.JTextField();
         txtProductShop = new javax.swing.JTextField();
@@ -127,10 +127,10 @@ public class ProductsForm extends javax.swing.JFrame {
             }
         });
 
-        txtProductQuanity.setBackground(new java.awt.Color(255, 255, 255));
-        txtProductQuanity.addActionListener(new java.awt.event.ActionListener() {
+        txtProductQuantity.setBackground(new java.awt.Color(255, 255, 255));
+        txtProductQuantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtProductQuanityActionPerformed(evt);
+                txtProductQuantityActionPerformed(evt);
             }
         });
 
@@ -185,7 +185,7 @@ public class ProductsForm extends javax.swing.JFrame {
                     .addComponent(txtProductName)
                     .addComponent(txtProductDescription)
                     .addComponent(txtProductionDate)
-                    .addComponent(txtProductQuanity)
+                    .addComponent(txtProductQuantity)
                     .addComponent(txtProductCategory)
                     .addComponent(txtProductShop))
                 .addContainerGap())
@@ -211,7 +211,7 @@ public class ProductsForm extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtProductQuanity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProductQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -478,9 +478,9 @@ public class ProductsForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtProductDescriptionActionPerformed
 
-    private void txtProductQuanityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductQuanityActionPerformed
+    private void txtProductQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductQuantityActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtProductQuanityActionPerformed
+    }//GEN-LAST:event_txtProductQuantityActionPerformed
 
     private void txtProductionDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductionDateActionPerformed
         // TODO add your handling code here:
@@ -497,7 +497,7 @@ public class ProductsForm extends javax.swing.JFrame {
         txtProductName.setText("");
         txtProductDescription.setText("");
         txtProductionDate.setText("");
-        txtProductQuanity.setText(""); 
+        txtProductQuantity.setText(""); 
         txtProductCategory.setText("");
         txtProductShop.setText("");
         
@@ -513,7 +513,7 @@ public class ProductsForm extends javax.swing.JFrame {
             product.setName(txtProductName.getText());
             product.setDescription(txtProductDescription.getText());
             product.setProductionDate(txtProductionDate.getText());
-            product.setQuantity(Integer.parseInt(txtProductQuanity.getText()));
+            product.setQuantity(Integer.parseInt(txtProductQuantity.getText()));
             product.setShop(txtProductShop.getText());
             
             productList.add(product);
@@ -532,6 +532,16 @@ public class ProductsForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             Product product = productList.searchById(txtProductID.getText());
+            if (product == null) {
+                JOptionPane.showMessageDialog(this, "Product ID is not exits or delete failed");
+            }
+            
+            txtProductName.setText(product.getName());
+            txtProductDescription.setText(product.getDescription());
+            txtProductionDate.setText(product.getProductionDate());
+            txtProductCategory.setText(product.getCategory());
+            txtProductShop.setText(product.getShop());
+            txtProductQuantity.setText("" + product.getQuantity());
             
                   
         }
@@ -652,7 +662,7 @@ public class ProductsForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtProductDescription;
     private javax.swing.JTextField txtProductID;
     private javax.swing.JTextField txtProductName;
-    private javax.swing.JTextField txtProductQuanity;
+    private javax.swing.JTextField txtProductQuantity;
     private javax.swing.JTextField txtProductShop;
     private javax.swing.JTextField txtProductionDate;
     // End of variables declaration//GEN-END:variables
