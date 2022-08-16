@@ -67,7 +67,7 @@ public class ProductList {
     // search product by it's ID
     public Product searchById(String productId) {
         for (Product product : list) {
-            if (product.getProductId().equals(productId)) {
+            if (product.getProductId().toLowerCase().equals(productId)) {
                 return product;
             }
         }
