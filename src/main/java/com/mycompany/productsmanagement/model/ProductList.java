@@ -81,14 +81,13 @@ public class ProductList {
         if (productInList == null) {
             return status;
         }
-        
-        productInList.setName(product.getName());
-        productInList.setDescription(product.getDescription());
-        productInList.setProductionDate(product.getProductionDate());
-        productInList.setQuantity(product.getQuantity());
-        productInList.setCategory(product.getCategory());
-        productInList.setShop(product.getShop());
-        return status = true;
+            productInList.setName(product.getName());
+            productInList.setDescription(product.getDescription());
+            productInList.setProductionDate(product.getProductionDate());
+            productInList.setQuantity(product.getQuantity());
+            productInList.setCategory(product.getCategory());
+            productInList.setShop(product.getShop());
+            return true;
     }
     
     

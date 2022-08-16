@@ -38,7 +38,7 @@ public class Validator {
             for (char c: chars) {
                 if (Character.isDigit(c)) {
                     stringBuilder.append("Name does not contains number!");
-                    feild.setBackground(new Color(204, 0, 0, 21));
+                    feild.setBackground(new Color(255, 153, 102, 255));
                 }
             }
 //            if ()
@@ -61,7 +61,7 @@ public class Validator {
     public static boolean checkQuantity(JTextField feild, StringBuilder stringBuilder) {
         boolean isValidate = true;
         
-        if (!checkEmpty(feild, stringBuilder, "Name is not empty!")){
+        if (!checkEmpty(feild, stringBuilder, "Quanity is not empty!")){
             return false;
         }
         
@@ -77,7 +77,7 @@ public class Validator {
             
         }
         catch (Exception e) {
-            stringBuilder.append("The value of name is not type of string!");
+            stringBuilder.append("The value of Quanity must be a number!");
             System.out.println("Error: " + e.getMessage());
             isValidate = false;
         }
@@ -92,7 +92,7 @@ public class Validator {
     public static boolean checkDescription(JTextField feild, StringBuilder stringBuilder) {
         boolean isValidate = true;
         
-        if (!checkEmpty(feild, stringBuilder, "Name is not empty!")){
+        if (!checkEmpty(feild, stringBuilder, "Description is not empty!")){
             return false;
         }
         
@@ -105,7 +105,7 @@ public class Validator {
             
         }
         catch (Exception e) {
-            stringBuilder.append("The value of name is not type of string!");
+            stringBuilder.append("Description is not empty");
             System.out.println("Error: " + e.getMessage());
             isValidate = false;
         }
@@ -121,7 +121,7 @@ public class Validator {
     public static boolean checkCategory(JTextField feild, StringBuilder stringBuilder) {
         boolean isValidate = true;
         
-        if (!checkEmpty(feild, stringBuilder, "Descriptoin is not empty!")){
+        if (!checkEmpty(feild, stringBuilder, "Category is not empty!")){
             return false;
         }
         
@@ -134,7 +134,7 @@ public class Validator {
             
         }
         catch (Exception e) {
-            stringBuilder.append("The value of description is not type of string!");
+            stringBuilder.append("The value of category must be a string!");
             System.out.println("Error: " + e.getMessage());
             isValidate = false;
         }
@@ -161,7 +161,7 @@ public class Validator {
             
         }
         catch (Exception e) {
-            stringBuilder.append("The value of shop is not type of string!");
+            stringBuilder.append("The value of shop must be a string!");
             System.out.println("Error: " + e.getMessage());
             isValidate = false;
         }
@@ -189,7 +189,7 @@ public class Validator {
             
         }
         catch (Exception e) {
-            stringBuilder.append("The value of shop is not type of string!");
+            stringBuilder.append("The production date must be like 2022-03-01 or 20220301!");
             System.out.println("Error: " + e.getMessage());
             isValidate = false;
         }
