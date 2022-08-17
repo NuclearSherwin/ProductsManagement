@@ -4,10 +4,13 @@
  */
 package com.mycompany.productsmanagement;
 
-import com.mycompany.productsmanagement.helper.Validator;
+import com.mycompany.productsmanagement.upgrade.Validator;
 import com.mycompany.productsmanagement.model.Product;
 import com.mycompany.productsmanagement.model.ProductList;
+import java.io.IOException;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,9 +31,23 @@ public class ProductsForm extends javax.swing.JFrame {
         
         // align form to center of the screen
         setLocationRelativeTo(null);
-        initTable();
-        initProductData();
+//        initTable();
+        
+        loadProductData();
+
+//        initProductData();
         btnFirstActionPerformed(null);
+    }
+    
+    
+    private void loadProductData() {
+        try {
+            productList.loadFormFile();
+            productList.renderToTable(tblModel);
+        } catch (Exception ex) {
+//            Logger.getLogger(ProductsForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "File error: " + ex.getMessage());
+        }
     }
     
     
@@ -44,14 +61,7 @@ public class ProductsForm extends javax.swing.JFrame {
     }
     
     // init the data to table
-    private void initProductData() {
-        productList.add(new Product("TV", "Mouse", "DPI 800", "2022", "Paika", "Technical", 222));
-        productList.add(new Product("BN", "Keyboard", "example", "2022", "Sherwin", "Technical", 222));
-        productList.add(new Product("AM", "Screen", "example", "2022", "Universe", "Technical", 222));
-        productList.add(new Product("MV", "Adapter", "example", "2022", "Phong", "Technical", 222));
-        
-        productList.renderToTable(tblModel);
-    }
+    
     
 
     /**
@@ -634,8 +644,6 @@ public class ProductsForm extends javax.swing.JFrame {
             }
             else
                 JOptionPane.showMessageDialog(this, "Product ID is not exits or delete failed");
-            
-            
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -648,7 +656,14 @@ public class ProductsForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOpenActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            productList.saveToFile();
+        } catch (IOException ex) {
+//            Logger.getLogger(ProductsForm.class.getName()).log(Level.SEVERE, null, ex);
+              JOptionPane.showMessageDialog(this, "Error file: " + ex.getMessage());
+            
+        }
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
@@ -778,4 +793,5 @@ public class ProductsForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtProductShop;
     private javax.swing.JTextField txtProductionDate;
     // End of variables declaration//GEN-END:variables
+
 }

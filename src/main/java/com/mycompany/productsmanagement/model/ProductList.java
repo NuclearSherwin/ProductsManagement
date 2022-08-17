@@ -4,6 +4,9 @@
  */
 package com.mycompany.productsmanagement.model;
 
+import com.mycompany.productsmanagement.upgrade.UpFile;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,6 +18,29 @@ public class ProductList {
     // where product being save
     private ArrayList<Product> list = new ArrayList<>();
     private int currentIndex = 0;
+    private String path = "E:\\labs\\PROG191\\labsYT\\data.dat";
+    
+    public void saveToFile() throws IOException {
+        UpFile.writeObject(path, list);
+    }
+    
+    public void loadFormFile() throws Exception {
+        File file = new File(path);
+        
+        if (!file.exists()) {
+            initProductData();
+        }
+//        
+        list = (ArrayList<Product>) UpFile.readObj(path);
+    }
+    
+    // init table
+    private void initProductData() {
+        list.add(new Product("TV", "Mouse", "DPI 800", "2022", "Paika", "Technical", 222));
+        list.add(new Product("BN", "Keyboard", "example", "2022", "Sherwin", "Technical", 222));
+        list.add(new Product("AM", "Screen", "example", "2022", "Universe", "Technical", 222));
+        list.add(new Product("MV", "Adapter", "example", "2022", "Phong", "Technical", 222));
+    }
     
     public void moveToFirst() {
         if (currentIndex > 0) {
