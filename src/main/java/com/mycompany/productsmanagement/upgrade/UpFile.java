@@ -4,33 +4,39 @@
  */
 package com.mycompany.productsmanagement.upgrade;
 
+import com.mycompany.productsmanagement.model.Product;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 /**
  *
  * @author phong
  */
 public class UpFile {
+    // Read file
     public static Object readObj(String path) throws IOException, ClassNotFoundException {
         try (
-            FileInputStream fileInPutStream = new FileInputStream(path);
-            ObjectInputStream objectInPutStream = new ObjectInputStream(fileInPutStream);
+            FileInputStream fileInputStream = new FileInputStream(path);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             ) {
-            
-            Object obj = objectInPutStream.readObject();
+            Object obj = objectInputStream.readObject();
             return obj;
         }
     }
     
+    // Write File
     public static void writeObject(String path, Object object) throws IOException {
-        try (FileOutputStream fileOutPutStream = new FileOutputStream(path);
-            ObjectOutputStream objectOutPutStream = new ObjectOutputStream(fileOutPutStream);)
+        try (    
+            FileOutputStream fileOutputStream = new FileOutputStream(path);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        )
         {
-           objectOutPutStream.writeObject(object);
+           objectOutputStream.writeObject(object);
         }
     }
+
 }

@@ -11,16 +11,18 @@ import java.io.Serializable;
  * @author phong
  */
 public class Product implements Serializable {
+
     private String productId, name, description, productionDate, category, shop;
     private int quantity;
-    
+    private double price;
+
     // default constructor
     public Product() {
-        
+
     }
 
-    public Product(String productId, String name, String description, 
-            String productionDate, String category, String shop, int quantity) {
+    public Product(String productId, String name, String description,
+            String productionDate, String category, String shop, int quantity, double price) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -28,10 +30,19 @@ public class Product implements Serializable {
         this.category = category;
         this.shop = shop;
         this.quantity = quantity;
+        this.price = price;
     }
 
     public String getProductId() {
         return productId;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public void setProductId(String productId) {
@@ -85,5 +96,5 @@ public class Product implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
+
 }
