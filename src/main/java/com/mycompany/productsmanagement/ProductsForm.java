@@ -23,7 +23,7 @@ public class ProductsForm extends javax.swing.JFrame {
 
     private DefaultTableModel tblModel = null;
     private ProductList productList = new ProductList();
-    private boolean isUpdateMode = false;
+//    private boolean isUpdateMode = false;
 
     /**
      * Creates new form ProductsForm
@@ -40,20 +40,23 @@ public class ProductsForm extends javax.swing.JFrame {
         btnFirstActionPerformed(null);
     }
 
+    // try to render the data from file, if there no data it will throws exeption
     private void loadProductData() {
         try {
             productList.loadFormFile();
             productList.renderToTable(tblModel);
         } catch (IOException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "File Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "File Error: "
+                    + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, "NotFound Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "NotFound Error: "
+                    + ex.getMessage());
         }
 
     }
 
-    // initialize the title for table
+    // initialize the title based on how many feild of input for table
     public void initTable() {
         tblModel = new DefaultTableModel();
         tblModel.setColumnIdentifiers(new Object[]{"ID", "Name", "Description",
@@ -108,8 +111,8 @@ public class ProductsForm extends javax.swing.JFrame {
         btnUpImg = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        btnSort = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
+        lblImg = new javax.swing.JLabel();
+        btnUpdate = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProducts = new javax.swing.JTable();
@@ -118,19 +121,27 @@ public class ProductsForm extends javax.swing.JFrame {
         btnNext = new javax.swing.JButton();
         btnPrevious = new javax.swing.JButton();
         LblStatus = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.setForeground(new java.awt.Color(0, 153, 102));
 
-        jLabel1.setFont(new java.awt.Font("JetBrains Mono", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Products Management");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         txtProductName.setBackground(new java.awt.Color(255, 255, 255));
+        txtProductName.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtProductNameInputMethodTextChanged(evt);
+            }
+        });
         txtProductName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtProductNameActionPerformed(evt);
@@ -138,6 +149,13 @@ public class ProductsForm extends javax.swing.JFrame {
         });
 
         txtProductID.setBackground(new java.awt.Color(255, 255, 255));
+        txtProductID.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtProductIDInputMethodTextChanged(evt);
+            }
+        });
         txtProductID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtProductIDActionPerformed(evt);
@@ -174,30 +192,22 @@ public class ProductsForm extends javax.swing.JFrame {
 
         txtProductShop.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
         jLabel2.setText("ID");
 
-        jLabel3.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
         jLabel3.setText("Name");
 
-        jLabel4.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
         jLabel4.setText("Description");
 
-        jLabel5.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
         jLabel5.setText("Production date");
 
-        jLabel6.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
         jLabel6.setText("Quantity");
 
-        jLabel7.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
         jLabel7.setText("Category");
 
-        jLabel8.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
         jLabel8.setText("Shop");
 
         txtProductPrice.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel11.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
         jLabel11.setText("Price");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -219,7 +229,7 @@ public class ProductsForm extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtProductPrice)
-                    .addComponent(txtProductID, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                    .addComponent(txtProductID, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
                     .addComponent(txtProductName)
                     .addComponent(txtProductDescription)
                     .addComponent(txtProductionDate)
@@ -263,14 +273,13 @@ public class ProductsForm extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtProductPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        btnNew.setBackground(new java.awt.Color(0, 153, 153));
-        btnNew.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
-        btnNew.setForeground(new java.awt.Color(255, 255, 255));
+        btnNew.setBackground(new java.awt.Color(255, 255, 255));
+        btnNew.setForeground(new java.awt.Color(0, 0, 0));
         btnNew.setText("New");
         btnNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -279,9 +288,8 @@ public class ProductsForm extends javax.swing.JFrame {
         });
 
         btnSave.setBackground(new java.awt.Color(0, 204, 0));
-        btnSave.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
-        btnSave.setForeground(new java.awt.Color(255, 255, 255));
-        btnSave.setText("Save");
+        btnSave.setForeground(new java.awt.Color(0, 0, 0));
+        btnSave.setText("Add");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -289,8 +297,7 @@ public class ProductsForm extends javax.swing.JFrame {
         });
 
         btnSearch.setBackground(new java.awt.Color(153, 153, 0));
-        btnSearch.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
-        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearch.setForeground(new java.awt.Color(0, 0, 0));
         btnSearch.setText("Search");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -298,9 +305,8 @@ public class ProductsForm extends javax.swing.JFrame {
             }
         });
 
-        btnDelete.setBackground(new java.awt.Color(255, 0, 0));
-        btnDelete.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
-        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
+        btnDelete.setBackground(new java.awt.Color(204, 0, 0));
+        btnDelete.setForeground(new java.awt.Color(0, 0, 0));
         btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -308,9 +314,8 @@ public class ProductsForm extends javax.swing.JFrame {
             }
         });
 
-        btnUpImg.setBackground(new java.awt.Color(51, 102, 255));
-        btnUpImg.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
-        btnUpImg.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpImg.setBackground(new java.awt.Color(0, 153, 153));
+        btnUpImg.setForeground(new java.awt.Color(0, 0, 0));
         btnUpImg.setText("Upload Image");
         btnUpImg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -318,9 +323,8 @@ public class ProductsForm extends javax.swing.JFrame {
             }
         });
 
-        btnExit.setBackground(new java.awt.Color(255, 153, 0));
-        btnExit.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
-        btnExit.setForeground(new java.awt.Color(255, 255, 255));
+        btnExit.setBackground(new java.awt.Color(204, 153, 0));
+        btnExit.setForeground(new java.awt.Color(0, 0, 0));
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,68 +335,67 @@ public class ProductsForm extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Options");
 
-        btnSort.setBackground(new java.awt.Color(204, 0, 204));
-        btnSort.setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
-        btnSort.setForeground(new java.awt.Color(255, 255, 255));
-        btnSort.setText("Sort");
-        btnSort.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSortActionPerformed(evt);
+        lblImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImg.setText("imgLbl");
+        lblImg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImgMouseClicked(evt);
             }
         });
 
-        jLabel10.setText("imgLbl");
+        btnUpdate.setBackground(new java.awt.Color(153, 153, 0));
+        btnUpdate.setForeground(new java.awt.Color(0, 0, 0));
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                        .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpImg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addGap(85, 85, 85))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                                    .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(31, 31, 31))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btnExit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnUpImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSort, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(31, 31, 31)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))))
+                .addGap(85, 85, 85)
+                .addComponent(jLabel9)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(lblImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel9)
-                .addGap(2, 2, 2)
+                .addGap(9, 9, 9)
                 .addComponent(btnNew)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSave)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSearch)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUpdate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDelete)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnUpImg)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSort)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExit)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -408,7 +411,15 @@ public class ProductsForm extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblProducts.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProductsMouseClicked(evt);
@@ -455,6 +466,8 @@ public class ProductsForm extends javax.swing.JFrame {
         LblStatus.setForeground(new java.awt.Color(0, 0, 0));
         LblStatus.setText("1 of 10");
 
+        jLabel10.setText("List of products");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -473,22 +486,28 @@ public class ProductsForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addGap(223, 223, 223))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFinal)
                     .addComponent(btnFirst)
                     .addComponent(btnNext)
                     .addComponent(btnPrevious)
                     .addComponent(LblStatus))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -508,25 +527,25 @@ public class ProductsForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(12, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(271, 271, 271))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(282, 282, 282)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -541,7 +560,6 @@ public class ProductsForm extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -573,27 +591,12 @@ public class ProductsForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtProductCategoryActionPerformed
 
-    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        // TODO add your handling code here:
-        // when user click new btn, it will reset all field to empty string and reset the Update mode to false
-        txtProductID.setText("");
-        txtProductName.setText("");
-        txtProductDescription.setText("");
-        txtProductionDate.setText("");
-        txtProductQuantity.setText("");
-        txtProductCategory.setText("");
-        txtProductShop.setText("");
-        txtProductPrice.setText("");
-
-        isUpdateMode = false;
-
-        // also refresh table
-        productList.renderToTable(tblModel);
-
-    }//GEN-LAST:event_btnNewActionPerformed
-
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+
+        // StringBuilder is represents a mutable sequence of characters,
+        // that means that can be modified
+        // here we call all function check from Validators that are needed to validate
         try {
             StringBuilder sb = new StringBuilder();
 
@@ -602,7 +605,9 @@ public class ProductsForm extends javax.swing.JFrame {
             Validator.checkQuantity(txtProductQuantity, sb);
             Validator.checkDescription(txtProductDescription, sb);
             Validator.checkProductionDate(txtProductionDate, sb);
-            Validator.checkShop(txtProductID, sb);
+            Validator.checkShop(txtProductShop, sb);
+            Validator.checkCategory(txtProductCategory, sb);
+            Validator.checkProductPrice(txtProductPrice, sb);
 
             if (sb.length() > 0) {
                 JOptionPane.showMessageDialog(this, sb.toString(), "Invalid Data", JOptionPane.ERROR_MESSAGE);
@@ -617,21 +622,28 @@ public class ProductsForm extends javax.swing.JFrame {
             product.setCategory(txtProductCategory.getText());
             product.setQuantity(Integer.parseInt(txtProductQuantity.getText()));
             product.setShop(txtProductShop.getText());
+            product.setPrice(Double.parseDouble(txtProductPrice.getText()));
 
             // checking weather update or new product
-            if (isUpdateMode == false) {
-                if (productList.searchById(product.getProductId().toLowerCase()) != null) {
-                    JOptionPane.showMessageDialog(this, "Product is existed!, please try another product");
-                    return;
-                }
-                productList.add(product);
-            } else {
-                if (productList.searchById(product.getProductId().toLowerCase()) == null) {
-                    JOptionPane.showMessageDialog(this, "ID does not exit");
-                    return;
-                }
-                productList.updateProduct(product);
+//            if (isUpdateMode == false) {
+//                if (productList.searchById(product.getProductId().toLowerCase()) != null) {
+//                    JOptionPane.showMessageDialog(this, "Product is existed!, please try another product");
+//                    return;
+//                }
+//                productList.add(product);
+//            } else {
+//                if (productList.searchById(product.getProductId().toLowerCase()) == null) {
+//                    JOptionPane.showMessageDialog(this, "ID does not exit");
+//                    return;
+//                }
+//                productList.updateProduct(product);
+//            }
+//
+            if (productList.searchById(product.getProductId().toLowerCase()) != null) {
+                JOptionPane.showMessageDialog(this, "Product is existed!, please try another product");
+                return;
             }
+            productList.add(product);
 
             // clear text in input feild
             btnNewActionPerformed(evt);
@@ -641,6 +653,19 @@ public class ProductsForm extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error update: " + e.getMessage());
         }
+
+        txtProductID.setText("");
+        txtProductName.setText("");
+        txtProductDescription.setText("");
+        txtProductionDate.setText("");
+        txtProductQuantity.setText("");
+        txtProductCategory.setText("");
+        txtProductShop.setText("");
+        txtProductPrice.setText("");
+
+//        isUpdateMode = false;
+        // also refresh table
+        productList.renderToTable(tblModel);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -661,7 +686,7 @@ public class ProductsForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void fillProductToForm(Product product) {
-        isUpdateMode = true;
+//        isUpdateMode = true;
         txtProductName.setText(product.getName());
         txtProductDescription.setText(product.getDescription());
         txtProductionDate.setText(product.getProductionDate());
@@ -699,8 +724,10 @@ public class ProductsForm extends javax.swing.JFrame {
         int x = fileChooser.showDialog(this, "Choose file");
         if (x == JFileChooser.APPROVE_OPTION) {
             File f = fileChooser.getSelectedFile();
-            jLabel10.setIcon(new ImageIcon(f.getAbsolutePath()));
+            lblImg.setIcon(new ImageIcon(f.getAbsolutePath()));
         }
+
+//       lblImg.setIcon(new ImageIcon(imgFilter.getScaledInstance(width,height,0)));
     }//GEN-LAST:event_btnUpImgActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
@@ -767,11 +794,113 @@ public class ProductsForm extends javax.swing.JFrame {
         tblProducts.setRowSelectionInterval(productList.getCurrentProductIndex(), productList.getCurrentProductIndex());
     }//GEN-LAST:event_btnFinalActionPerformed
 
-    private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
+    private void lblImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgMouseClicked
+        // TODO add your handling code here:
+        int width = lblImg.getWidth();
+        int height = lblImg.getHeight();
+
+    }//GEN-LAST:event_lblImgMouseClicked
+
+    private void txtProductNameInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtProductNameInputMethodTextChanged
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_btnSortActionPerformed
+    }//GEN-LAST:event_txtProductNameInputMethodTextChanged
 
+    private void txtProductIDInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtProductIDInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtProductIDInputMethodTextChanged
+
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        // TODO add your handling code here:
+
+        // when user click new btn, it will reset all field to empty string and reset the Update mode to false
+        txtProductID.setText("");
+        txtProductName.setText("");
+        txtProductDescription.setText("");
+        txtProductionDate.setText("");
+        txtProductQuantity.setText("");
+        txtProductCategory.setText("");
+        txtProductShop.setText("");
+        txtProductPrice.setText("");
+
+//        isUpdateMode = false;
+        // also refresh table
+        productList.renderToTable(tblModel);
+    }//GEN-LAST:event_btnNewActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        try {
+            StringBuilder sb = new StringBuilder();
+
+            Validator.checkEmpty(txtProductID, sb, "ID does not empty!");
+            Validator.checkName(txtProductName, sb, "Name was not contain any number");
+            Validator.checkQuantity(txtProductQuantity, sb);
+            Validator.checkDescription(txtProductDescription, sb);
+            Validator.checkProductionDate(txtProductionDate, sb);
+            Validator.checkShop(txtProductShop, sb);
+            Validator.checkCategory(txtProductCategory, sb);
+            Validator.checkProductPrice(txtProductPrice, sb);
+
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb.toString(), "Invalid Data", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Product product = new Product();
+            product.setProductId(txtProductID.getText());
+            product.setName(txtProductName.getText());
+            product.setDescription(txtProductDescription.getText());
+            product.setProductionDate(txtProductionDate.getText());
+            product.setCategory(txtProductCategory.getText());
+            product.setQuantity(Integer.parseInt(txtProductQuantity.getText()));
+            product.setShop(txtProductShop.getText());
+            product.setPrice(Double.parseDouble(txtProductPrice.getText()));
+
+            // checking weather update or new product
+            if (productList.searchById(product.getProductId().toLowerCase()) == null) {
+                JOptionPane.showMessageDialog(this, "ID does not exit");
+                return;
+            }
+            productList.updateProduct(product);
+
+            // clear text in input feild
+            btnNewActionPerformed(evt);
+            productList.renderToTable(tblModel);
+            JOptionPane.showMessageDialog(this, "Product save successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error update: " + e.getMessage());
+        }
+
+        txtProductID.setText("");
+        txtProductName.setText("");
+        txtProductDescription.setText("");
+        txtProductionDate.setText("");
+        txtProductQuantity.setText("");
+        txtProductCategory.setText("");
+        txtProductShop.setText("");
+        txtProductPrice.setText("");
+
+//        isUpdateMode = false;
+        // also refresh table
+        productList.renderToTable(tblModel);
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+//    try{
+//        JFileChooser jfc =new JFileChooser();
+//        jfc.showOpenDialog(null);
+//        File file = jfc.getSelectedFile();
+//        Image img = ImageIO.read(file);
+//        strImage=file.getName();
+//        lblImage.setText("");
+//        int width= lblImage.getWidth();
+//        int height= lblImage.getHeight();
+//        lblImage.setIcon(new ImageIcon(img.getScaledInstance(width,height,0)));
+//
+//           }catch(IOException ex){
+//               System.out.println("Error:"+ex.toString());
+//           }
     /**
      * @param args the command line arguments
      */
@@ -818,8 +947,8 @@ public class ProductsForm extends javax.swing.JFrame {
     private javax.swing.JButton btnPrevious;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton btnSort;
     private javax.swing.JButton btnUpImg;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -837,6 +966,7 @@ public class ProductsForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblImg;
     private javax.swing.JTable tblProducts;
     private javax.swing.JTextField txtProductCategory;
     private javax.swing.JTextField txtProductDescription;

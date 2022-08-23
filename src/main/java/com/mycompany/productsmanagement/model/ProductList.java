@@ -19,13 +19,14 @@ public class ProductList extends Product {
     // where product being save
     private ArrayList<Product> list = new ArrayList<>();
     private int currentIndex = 0;
-    private String pathFile = "E:/labs/PROG191/labsYT/data.txt";
+    private final String pathFile = "E:/labs/PROG191/labsYT/data.txt";
 
     public void saveToFile() throws IOException {
         UpFile.writeObject(pathFile, list);
     }
 
-    public void loadFormFile() throws IOException, ClassNotFoundException {
+    public void loadFormFile() throws IOException,
+            ClassNotFoundException {
         File file = new File(pathFile);
 
         if (!file.exists()) {
@@ -37,10 +38,10 @@ public class ProductList extends Product {
 
     // init table
     private void initProductData() {
-        list.add(new Product("201WM", "Mouse", "DPI 800", "2022", "Paika", "Technical", 1, 99));
-        list.add(new Product("202NA", "Keyboard", "example", "2022", "Sherwin", "Technical", 2, 29));
-        list.add(new Product("203AM", "Screen", "example", "2022", "Universe", "Technical", 3, 32));
-        list.add(new Product("204MB", "Adapter", "example", "2022", "Phong", "Technical", 4, 74.5));
+        list.add(new Product("201WM", "Mouse", "DPI 800", "2022/12/03", "Paika", "Technical", 1, 99));
+        list.add(new Product("202NA", "Keyboard", "example", "2022/03/16", "Sherwin", "Technical", 2, 29));
+        list.add(new Product("203AM", "Screen", "example", "2022/09/12", "Universe", "Technical", 3, 32));
+        list.add(new Product("204MB", "Adapter", "example", "2022/01/29", "Phong", "Technical", 4, 74.5));
     }
 
     public void moveToFirst() {
@@ -94,7 +95,8 @@ public class ProductList extends Product {
     // search product by it's ID
     public Product searchById(String productId) {
         for (Product product : list) {
-            if (product.getProductId().toLowerCase().equals(productId.toLowerCase())) {
+            if (product.getProductId().replaceAll(" ", "").toLowerCase().
+                    equalsIgnoreCase(productId.replaceAll(" ", "").toLowerCase())) {
                 return product;
             }
         }
@@ -103,7 +105,7 @@ public class ProductList extends Product {
 
     // update product by it's ID
     public boolean updateProduct(Product product) {
-        Product productInList = searchById(product.getProductId().toLowerCase());
+        Product productInList = searchById(product.getProductId().replaceAll(" ", "").toLowerCase());
         boolean status = false;
         if (productInList == null) {
             return status;
@@ -145,7 +147,7 @@ public class ProductList extends Product {
     // delete product by it's ID
     public boolean delete(String productId) {
         for (Product product : list) {
-            if (product.getProductId().equals(productId)) {
+            if (product.getProductId().trim().toLowerCase().equals(productId)) {
                 list.remove(product);
                 return true;
             }

@@ -12,7 +12,8 @@ import java.io.Serializable;
  */
 public class Product implements Serializable {
 
-    private String productId, name, description, productionDate, category, shop;
+    private String productId, name, description, category, shop;
+    private String productionDate;
     private int quantity;
     private double price;
 
@@ -97,4 +98,5 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
+    // move index
 }

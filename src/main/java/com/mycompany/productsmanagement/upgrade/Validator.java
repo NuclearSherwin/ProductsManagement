@@ -5,6 +5,8 @@
 package com.mycompany.productsmanagement.upgrade;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JTextField;
@@ -26,7 +28,7 @@ public class Validator {
 
         try {
             String name = feild.getText();
-            Pattern pattern = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Pattern pattern = Pattern.compile("[/.!@#$%&*()_+=|<>?{}\\[\\]~-]");
             Matcher matcher = pattern.matcher(name);
             boolean isSpecial = matcher.find();
 
@@ -36,6 +38,7 @@ public class Validator {
                     stringBuilder.append("Name does not contains number!");
                     stringBuilder.append(message).append("\n");
                     feild.setBackground(new Color(214, 0, 0, 116));
+                    break;
                 }
             }
             // for special characters
@@ -45,8 +48,14 @@ public class Validator {
                 feild.setBackground(new Color(214, 0, 0, 116));
             }
 
+            if (name.startsWith(" ")) {
+                stringBuilder.append("Please remove space!\n");
+                feild.setBackground(new Color(214, 0, 0, 116));
+            }
+
         } catch (Exception e) {
-            stringBuilder.append("The value of name is not type of string!");
+            stringBuilder.append("Name must be a string!");
+            feild.setBackground(new Color(204, 0, 0, 21));
             System.out.println("Name error: " + e.getMessage());
             isValidate = false;
         }
@@ -71,13 +80,13 @@ public class Validator {
             feild.setBackground(new Color(204, 0, 0, 21));
 
             if (quantity <= 0) {
-                stringBuilder.append("The quantity can not smaller than 1");
+                stringBuilder.append("The quantity can not smaller than 1!");
                 feild.setBackground(new Color(204, 0, 0, 21));
                 isValidate = false;
             }
 
         } catch (Exception e) {
-            stringBuilder.append("The value of Quanity must be a number!");
+            stringBuilder.append("The value of quanity must be a number!");
             System.out.println("Quanity error: " + e.getMessage());
             isValidate = false;
         }
@@ -94,6 +103,7 @@ public class Validator {
         boolean isValidate = true;
 
         if (!checkEmpty(feild, stringBuilder, "Description is not empty!")) {
+            feild.setBackground(new Color(214, 0, 0, 116));
             return false;
         }
 
@@ -119,12 +129,31 @@ public class Validator {
         boolean isValidate = true;
 
         if (!checkEmpty(feild, stringBuilder, "Category is not empty!")) {
+            feild.setBackground(new Color(214, 0, 0, 116));
             return false;
         }
 
         try {
             String category = feild.getText();
             feild.setBackground(new Color(204, 0, 0, 21));
+            Pattern pattern = Pattern.compile("[/.!@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher matcher = pattern.matcher(category);
+            boolean isSpecial = matcher.find();
+
+            char[] chars = category.toCharArray();
+            for (char c : chars) {
+                if (Character.isDigit(c)) {
+                    stringBuilder.append("Category does not contain number!\n");
+                    feild.setBackground(new Color(214, 0, 0, 116));
+                    break;
+                }
+            }
+
+            // for special characters
+            if (isSpecial) {
+                stringBuilder.append("Category does not contains special characters!\n");
+                feild.setBackground(new Color(214, 0, 0, 116));
+            }
 
         } catch (Exception e) {
             stringBuilder.append("The value of category must be a string!");
@@ -144,16 +173,26 @@ public class Validator {
         boolean isValidate = true;
 
         if (!checkEmpty(feild, stringBuilder, "Shop is not empty!")) {
+            feild.setBackground(new Color(214, 0, 0, 116));
             return false;
         }
 
         try {
-            String shopName = feild.getText();
+            String category = feild.getText();
             feild.setBackground(new Color(204, 0, 0, 21));
+            Pattern pattern = Pattern.compile("[/.!@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher matcher = pattern.matcher(category);
+            boolean isSpecial = matcher.find();
+
+            // for special characters
+            if (isSpecial) {
+                stringBuilder.append("Shop does not contains special characters!\n");
+                feild.setBackground(new Color(214, 0, 0, 116));
+            }
 
         } catch (Exception e) {
-            stringBuilder.append("The value of shop must be a string!");
-            System.out.println("Shop name error: " + e.getMessage());
+            stringBuilder.append("Shop must be a string or number!");
+            System.out.println("Category error: " + e.getMessage());
             isValidate = false;
         }
 
@@ -167,6 +206,8 @@ public class Validator {
 
     public static boolean checkProductionDate(JTextField feild, StringBuilder stringBuilder) {
         boolean isValidate = true;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        formatter.setLenient(false);
 
         if (!checkEmpty(feild, stringBuilder, "Production date is not empty!")) {
             return false;
@@ -174,11 +215,42 @@ public class Validator {
 
         try {
             String productionDate = feild.getText();
-            feild.setBackground(new Color(204, 0, 0, 21));
+            Date checkDate = formatter.parse(productionDate);
+            Pattern pattern = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher matcher = pattern.matcher(productionDate);
+            boolean isSpecial = matcher.find();
+            // check if weather the flash / are over the three characters
+//            Pattern checkOutOfRange = Pattern.compile("[/]");
+//            Matcher overFlashChar = checkOutOfRange.matcher(productionDate);
+//            boolean isOverThanThree = overFlashChar.find();
+
+            char[] chars = productionDate.toCharArray();
+            for (char c : chars) {
+                if (Character.isLetter(c)) {
+                    stringBuilder.append("Production date does not contains text!\n");
+                    feild.setBackground(new Color(214, 0, 0, 116));
+                    break;
+                }
+            }
+
+            if (productionDate.endsWith("/")) {
+                stringBuilder.append("Production date does not contain character!\n");
+                feild.setBackground(new Color(214, 0, 0, 116));
+            }
+
+            if (isSpecial) {
+                stringBuilder.append("Production date does not contain character!\n");
+                feild.setBackground(new Color(214, 0, 0, 116));
+            }
+
+            if (productionDate.startsWith(" ")) {
+                stringBuilder.append("Please remove space!\n");
+                feild.setBackground(new Color(214, 0, 0, 116));
+            }
 
         } catch (Exception e) {
-            stringBuilder.append("The production date must be like 2022-03-01 or 20220301!");
-            System.out.println("Production date  error: " + e.getMessage());
+            stringBuilder.append("Date type format error!");
+            System.out.println("Date type format error!: " + e.getMessage());
             isValidate = false;
         }
 
@@ -194,16 +266,17 @@ public class Validator {
         boolean isValidate = true;
 
         if (!checkEmpty(feild, stringBuilder, "Price is not empty!")) {
+            feild.setBackground(new Color(214, 0, 0, 116));
             return false;
         }
 
         try {
-            double price = Integer.parseInt(feild.getText());
+            double price = Double.parseDouble(feild.getText());
             feild.setBackground(new Color(204, 0, 0, 21));
 
         } catch (Exception e) {
-            stringBuilder.append("Price is have to number!");
-            System.out.println("Production date  error: " + e.getMessage());
+            stringBuilder.append("Price must be a number!");
+            System.out.println("Production date error: " + e.getMessage());
             isValidate = false;
         }
 
@@ -226,4 +299,11 @@ public class Validator {
         }
         return isValidate;
     }
+
+    public void checkIsCorrect(JTextField feild, StringBuilder stringBuilder, String message) {
+        if (!feild.getText().isBlank()) {
+            feild.setBackground(new Color(255, 255, 255, 255));
+        }
+    }
+
 }
