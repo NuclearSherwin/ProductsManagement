@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 public class Validator {
 
     // checking name when user input
-    public static boolean checkName(JTextField feild, StringBuilder stringBuilder, String message) {
+    public static boolean checkName(JTextField feild, StringBuilder stringBuilder) {
         // create variable validata for update status
         boolean isValidate = true;
 
@@ -35,16 +35,14 @@ public class Validator {
             char[] chars = name.toCharArray();
             for (char c : chars) {
                 if (Character.isDigit(c)) {
-                    stringBuilder.append("Name does not contains number!");
-                    stringBuilder.append(message).append("\n");
+                    stringBuilder.append("Name does not contain number!");
                     feild.setBackground(new Color(214, 0, 0, 116));
                     break;
                 }
             }
             // for special characters
             if (isSpecial) {
-                stringBuilder.append("Name does not contains special characters!");
-                stringBuilder.append(message).append("\n");
+                stringBuilder.append("Name does not contain special characters!");
                 feild.setBackground(new Color(214, 0, 0, 116));
             }
 
@@ -55,6 +53,47 @@ public class Validator {
 
         } catch (Exception e) {
             stringBuilder.append("Name must be a string!");
+            feild.setBackground(new Color(204, 0, 0, 21));
+            System.out.println("Name error: " + e.getMessage());
+            isValidate = false;
+        }
+
+        if (isValidate) {
+            feild.setBackground(Color.white);
+        }
+
+        return isValidate;
+    }
+
+    // checking ID when user input
+    public static boolean checkId(JTextField feild, StringBuilder stringBuilder, String message) {
+        // create variable validata for update status
+        boolean isValidate = true;
+
+        if (!checkEmpty(feild, stringBuilder, "Id is not empty!")) {
+            return false;
+        }
+
+        try {
+            String ID = feild.getText();
+            Pattern pattern = Pattern.compile("[/.!@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher matcher = pattern.matcher(ID);
+            boolean isSpecial = matcher.find();
+
+            // for special characters
+            if (isSpecial) {
+                stringBuilder.append("ID does not contains special characters!");
+                stringBuilder.append(message).append("\n");
+                feild.setBackground(new Color(214, 0, 0, 116));
+            }
+
+            if (ID.startsWith(" ")) {
+                stringBuilder.append("Please remove space!\n");
+                feild.setBackground(new Color(214, 0, 0, 116));
+            }
+
+        } catch (Exception e) {
+            stringBuilder.append("ID must be a string or number!");
             feild.setBackground(new Color(204, 0, 0, 21));
             System.out.println("Name error: " + e.getMessage());
             isValidate = false;
@@ -151,7 +190,7 @@ public class Validator {
 
             // for special characters
             if (isSpecial) {
-                stringBuilder.append("Category does not contains special characters!\n");
+                stringBuilder.append("Category does not contain special characters!\n");
                 feild.setBackground(new Color(214, 0, 0, 116));
             }
 
@@ -186,12 +225,12 @@ public class Validator {
 
             // for special characters
             if (isSpecial) {
-                stringBuilder.append("Shop does not contains special characters!\n");
+                stringBuilder.append("Shop does not contain special characters!\n");
                 feild.setBackground(new Color(214, 0, 0, 116));
             }
 
         } catch (Exception e) {
-            stringBuilder.append("Shop must be a string or number!");
+            stringBuilder.append("Shop must be a string!");
             System.out.println("Category error: " + e.getMessage());
             isValidate = false;
         }
@@ -202,8 +241,8 @@ public class Validator {
 
         return isValidate;
     }
-    // checking production when user input
 
+    // checking production when user input
     public static boolean checkProductionDate(JTextField feild, StringBuilder stringBuilder) {
         boolean isValidate = true;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
@@ -219,15 +258,10 @@ public class Validator {
             Pattern pattern = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
             Matcher matcher = pattern.matcher(productionDate);
             boolean isSpecial = matcher.find();
-            // check if weather the flash / are over the three characters
-//            Pattern checkOutOfRange = Pattern.compile("[/]");
-//            Matcher overFlashChar = checkOutOfRange.matcher(productionDate);
-//            boolean isOverThanThree = overFlashChar.find();
-
             char[] chars = productionDate.toCharArray();
             for (char c : chars) {
                 if (Character.isLetter(c)) {
-                    stringBuilder.append("Production date does not contains text!\n");
+                    stringBuilder.append("Production date does not contain text!\n");
                     feild.setBackground(new Color(214, 0, 0, 116));
                     break;
                 }

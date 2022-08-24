@@ -19,7 +19,7 @@ public class ProductList extends Product {
     // where product being save
     private ArrayList<Product> list = new ArrayList<>();
     private int currentIndex = 0;
-    private final String pathFile = "E:/labs/PROG191/labsYT/data.txt";
+    private final String pathFile = "E:/labs/PROG191/File/data.txt";
 
     public void saveToFile() throws IOException {
         UpFile.writeObject(pathFile, list);
@@ -36,7 +36,7 @@ public class ProductList extends Product {
         }
     }
 
-    // init table
+    // init value for table
     private void initProductData() {
         list.add(new Product("201WM", "Mouse", "DPI 800", "2022/12/03", "Paika", "Technical", 1, 99));
         list.add(new Product("202NA", "Keyboard", "example", "2022/03/16", "Sherwin", "Technical", 2, 29));
@@ -120,7 +120,7 @@ public class ProductList extends Product {
         return true;
     }
 
-    // render to table
+    // render or flush data to table to save changes
     public void renderToTable(DefaultTableModel tblModel) {
         tblModel.setRowCount(0);
 
@@ -140,7 +140,6 @@ public class ProductList extends Product {
             tblModel.addRow(row);
         }
 
-        // change info
         tblModel.fireTableDataChanged();
     }
 

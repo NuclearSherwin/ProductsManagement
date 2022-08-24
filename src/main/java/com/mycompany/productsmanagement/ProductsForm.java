@@ -34,7 +34,6 @@ public class ProductsForm extends javax.swing.JFrame {
         // Align form to center of the screen
         setLocationRelativeTo(null);
         initTable();
-//        initProductData();
         loadProductData();
 
         btnFirstActionPerformed(null);
@@ -65,15 +64,6 @@ public class ProductsForm extends javax.swing.JFrame {
         tblProducts.setModel(tblModel);
     }
 
-    // init the data to table
-//     private void initProductData() {
-//        productList.add(new Product("TV", "Mouse", "DPI 800", "2022", "Paika", "Technical", 222));
-//        productList.add(new Product("BN", "Keyboard", "example", "2022", "Sherwin", "Technical", 222));
-//        productList.add(new Product("AM", "Screen", "example", "2022", "Universe", "Technical", 222));
-//        productList.add(new Product("MV", "Adapter", "example", "2022", "Phong", "Technical", 222));
-//
-//        productList.renderToTable(tblModel);
-//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -369,10 +359,14 @@ public class ProductsForm extends javax.swing.JFrame {
                     .addComponent(btnExit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(jLabel9)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(lblImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -600,8 +594,9 @@ public class ProductsForm extends javax.swing.JFrame {
         try {
             StringBuilder sb = new StringBuilder();
 
-            Validator.checkEmpty(txtProductID, sb, "ID does not empty!");
-            Validator.checkName(txtProductName, sb, "Name was not contain any number");
+            Validator.checkEmpty(txtProductID, sb, "Product info does not empty!");
+            Validator.checkId(txtProductID, sb, "ID does not empty");
+            Validator.checkName(txtProductName, sb);
             Validator.checkQuantity(txtProductQuantity, sb);
             Validator.checkDescription(txtProductDescription, sb);
             Validator.checkProductionDate(txtProductionDate, sb);
@@ -651,7 +646,7 @@ public class ProductsForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Product save successfully!");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error update: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error add: " + e.getMessage());
         }
 
         txtProductID.setText("");
@@ -705,7 +700,7 @@ public class ProductsForm extends javax.swing.JFrame {
                 productList.renderToTable(tblModel);
                 JOptionPane.showMessageDialog(this, "Delete product successfully!");
             } else {
-                JOptionPane.showMessageDialog(this, "Product ID is not exits or delete failed");
+                JOptionPane.showMessageDialog(this, "Product ID does not exits");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -823,8 +818,6 @@ public class ProductsForm extends javax.swing.JFrame {
         txtProductShop.setText("");
         txtProductPrice.setText("");
 
-//        isUpdateMode = false;
-        // also refresh table
         productList.renderToTable(tblModel);
     }//GEN-LAST:event_btnNewActionPerformed
 
@@ -834,7 +827,7 @@ public class ProductsForm extends javax.swing.JFrame {
             StringBuilder sb = new StringBuilder();
 
             Validator.checkEmpty(txtProductID, sb, "ID does not empty!");
-            Validator.checkName(txtProductName, sb, "Name was not contain any number");
+            Validator.checkName(txtProductName, sb);
             Validator.checkQuantity(txtProductQuantity, sb);
             Validator.checkDescription(txtProductDescription, sb);
             Validator.checkProductionDate(txtProductionDate, sb);
@@ -867,7 +860,7 @@ public class ProductsForm extends javax.swing.JFrame {
             // clear text in input feild
             btnNewActionPerformed(evt);
             productList.renderToTable(tblModel);
-            JOptionPane.showMessageDialog(this, "Product save successfully!");
+            JOptionPane.showMessageDialog(this, "Product updated successfully!");
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error update: " + e.getMessage());

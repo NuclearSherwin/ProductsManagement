@@ -98,5 +98,4 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
-    // move index
 }
