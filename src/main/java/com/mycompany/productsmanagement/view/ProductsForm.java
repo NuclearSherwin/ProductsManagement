@@ -36,6 +36,7 @@ public class ProductsForm extends javax.swing.JFrame {
         initTable();
         loadProductData();
 
+        // show the data of the first row to form
         btnFirstActionPerformed(null);
     }
 
@@ -586,8 +587,8 @@ public class ProductsForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtProductCategoryActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
 
+        // TODO add your handling code here:
         // StringBuilder is represents a mutable sequence of characters,
         // that means that can be modified
         // here we call all function check from Validators that are needed to validate
@@ -619,21 +620,6 @@ public class ProductsForm extends javax.swing.JFrame {
             product.setShop(txtProductShop.getText());
             product.setPrice(Double.parseDouble(txtProductPrice.getText()));
 
-            // checking weather update or new product
-//            if (isUpdateMode == false) {
-//                if (productList.searchById(product.getProductId().toLowerCase()) != null) {
-//                    JOptionPane.showMessageDialog(this, "Product is existed!, please try another product");
-//                    return;
-//                }
-//                productList.add(product);
-//            } else {
-//                if (productList.searchById(product.getProductId().toLowerCase()) == null) {
-//                    JOptionPane.showMessageDialog(this, "ID does not exit");
-//                    return;
-//                }
-//                productList.updateProduct(product);
-//            }
-//
             if (productList.searchById(product.getProductId().toLowerCase()) != null) {
                 JOptionPane.showMessageDialog(this, "Product is existed!, please try another product");
                 return;
@@ -661,6 +647,12 @@ public class ProductsForm extends javax.swing.JFrame {
 //        isUpdateMode = false;
         // also refresh table
         productList.renderToTable(tblModel);
+
+        try {
+            productList.saveToFile();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Save to file error: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -878,6 +870,12 @@ public class ProductsForm extends javax.swing.JFrame {
 //        isUpdateMode = false;
         // also refresh table
         productList.renderToTable(tblModel);
+
+        try {
+            productList.saveToFile();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error file: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
 //    try{

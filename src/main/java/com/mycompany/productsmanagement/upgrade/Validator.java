@@ -36,24 +36,24 @@ public class Validator {
             for (char c : chars) {
                 if (Character.isDigit(c)) {
                     stringBuilder.append("Name does not contain number!");
-                    feild.setBackground(new Color(214, 0, 0, 116));
+                    feild.setForeground(Color.red);
                     break;
                 }
             }
             // for special characters
             if (isSpecial) {
                 stringBuilder.append("Name does not contain special characters!");
-                feild.setBackground(new Color(214, 0, 0, 116));
+                feild.setForeground(Color.red);
             }
 
             if (name.startsWith(" ")) {
                 stringBuilder.append("Please remove space!\n");
-                feild.setBackground(new Color(214, 0, 0, 116));
+                feild.setForeground(Color.red);
             }
 
         } catch (Exception e) {
             stringBuilder.append("Name must be a string!");
-            feild.setBackground(new Color(204, 0, 0, 21));
+            feild.setForeground(new Color(204, 0, 0, 21));
             System.out.println("Name error: " + e.getMessage());
             isValidate = false;
         }
@@ -79,22 +79,16 @@ public class Validator {
             Pattern pattern = Pattern.compile("[/.!@#$%&*()_+=|<>?{}\\[\\]~-]");
             Matcher matcher = pattern.matcher(ID);
             boolean isSpecial = matcher.find();
-
             // for special characters
-            if (isSpecial) {
-                stringBuilder.append("ID does not contains special characters!");
-                stringBuilder.append(message).append("\n");
-                feild.setBackground(new Color(214, 0, 0, 116));
-            }
 
             if (ID.startsWith(" ")) {
                 stringBuilder.append("Please remove space!\n");
-                feild.setBackground(new Color(214, 0, 0, 116));
+                feild.setForeground(Color.red);
             }
 
         } catch (Exception e) {
             stringBuilder.append("ID must be a string or number!");
-            feild.setBackground(new Color(204, 0, 0, 21));
+            feild.setForeground(new Color(204, 0, 0, 21));
             System.out.println("Name error: " + e.getMessage());
             isValidate = false;
         }
@@ -116,11 +110,11 @@ public class Validator {
 
         try {
             int quantity = Integer.parseInt(feild.getText());
-            feild.setBackground(new Color(204, 0, 0, 21));
+            feild.setForeground(new Color(204, 0, 0, 21));
 
             if (quantity <= 0) {
                 stringBuilder.append("The quantity can not smaller than 1!");
-                feild.setBackground(new Color(204, 0, 0, 21));
+                feild.setForeground(Color.red);
                 isValidate = false;
             }
 
@@ -142,7 +136,7 @@ public class Validator {
         boolean isValidate = true;
 
         if (!checkEmpty(feild, stringBuilder, "Description is not empty!")) {
-            feild.setBackground(new Color(214, 0, 0, 116));
+            feild.setForeground(Color.red);
             return false;
         }
 
@@ -168,7 +162,7 @@ public class Validator {
         boolean isValidate = true;
 
         if (!checkEmpty(feild, stringBuilder, "Category is not empty!")) {
-            feild.setBackground(new Color(214, 0, 0, 116));
+            feild.setForeground(Color.red);
             return false;
         }
 
@@ -183,7 +177,7 @@ public class Validator {
             for (char c : chars) {
                 if (Character.isDigit(c)) {
                     stringBuilder.append("Category does not contain number!\n");
-                    feild.setBackground(new Color(214, 0, 0, 116));
+                    feild.setForeground(Color.red);
                     break;
                 }
             }
@@ -191,7 +185,7 @@ public class Validator {
             // for special characters
             if (isSpecial) {
                 stringBuilder.append("Category does not contain special characters!\n");
-                feild.setBackground(new Color(214, 0, 0, 116));
+                feild.setForeground(Color.red);
             }
 
         } catch (Exception e) {
@@ -212,7 +206,7 @@ public class Validator {
         boolean isValidate = true;
 
         if (!checkEmpty(feild, stringBuilder, "Shop is not empty!")) {
-            feild.setBackground(new Color(214, 0, 0, 116));
+            feild.setForeground(Color.red);
             return false;
         }
 
@@ -226,7 +220,7 @@ public class Validator {
             // for special characters
             if (isSpecial) {
                 stringBuilder.append("Shop does not contain special characters!\n");
-                feild.setBackground(new Color(214, 0, 0, 116));
+                feild.setForeground(Color.red);
             }
 
         } catch (Exception e) {
@@ -262,24 +256,24 @@ public class Validator {
             for (char c : chars) {
                 if (Character.isLetter(c)) {
                     stringBuilder.append("Production date does not contain text!\n");
-                    feild.setBackground(new Color(214, 0, 0, 116));
+                    feild.setForeground(Color.red);
                     break;
                 }
             }
 
             if (productionDate.endsWith("/")) {
                 stringBuilder.append("Production date does not contain character!\n");
-                feild.setBackground(new Color(214, 0, 0, 116));
+                feild.setForeground(Color.red);
             }
 
             if (isSpecial) {
                 stringBuilder.append("Production date does not contain character!\n");
-                feild.setBackground(new Color(214, 0, 0, 116));
+                feild.setForeground(Color.red);
             }
 
             if (productionDate.startsWith(" ")) {
                 stringBuilder.append("Please remove space!\n");
-                feild.setBackground(new Color(214, 0, 0, 116));
+                feild.setForeground(Color.red);
             }
 
         } catch (Exception e) {
@@ -300,13 +294,13 @@ public class Validator {
         boolean isValidate = true;
 
         if (!checkEmpty(feild, stringBuilder, "Price is not empty!")) {
-            feild.setBackground(new Color(214, 0, 0, 116));
+            feild.setForeground(Color.red);
             return false;
         }
 
         try {
             double price = Double.parseDouble(feild.getText());
-            feild.setBackground(new Color(204, 0, 0, 21));
+            feild.setForeground(new Color(204, 0, 0, 21));
 
         } catch (Exception e) {
             stringBuilder.append("Price must be a number!");
@@ -326,7 +320,7 @@ public class Validator {
         boolean isValidate = true;
         if (feild.getText().equals("")) {
             stringBuilder.append(message).append("\n");
-            feild.setBackground(new Color(214, 0, 0, 116));
+            feild.setForeground(Color.red);
             isValidate = false;
         } else {
             feild.setBackground(Color.white);
