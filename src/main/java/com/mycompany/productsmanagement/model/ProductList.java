@@ -19,7 +19,7 @@ public class ProductList extends Product {
     // where product being save
     private ArrayList<Product> list = new ArrayList<>();
     private int currentIndex = 0;
-    private final String pathFile = "E:/labs/PROG191/File/data.txt";
+    private final String pathFile = "/home/phong-zorin/work/java-projects/data";
 
     public void saveToFile() throws IOException {
         UpFile.writeObject(pathFile, list);
